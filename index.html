@@ -1633,6 +1633,14 @@ const Voice=(()=>{let on=false,raf=0;
   const go=()=>{if(!raf)raf=requestAnimationFrame(apply)};
   new MutationObserver(go).observe(document.body,{subtree:true,childList:true,characterData:true});
   return {apply:go,now:apply}})();
+/* Safari (iOS) n'accepte pas var(--…) dans les attributs SVG fill/stroke : la forme devient noire.
+   On recopie ces valeurs en style, où toutes les WebKit les comprennent (bulles, carte, icônes). */
+const SVGVAR=(()=>{const A=['fill','stroke','stop-color','color'],SEL=A.map(a=>`[${a}^="var("]`).join(',');
+  const fix=root=>{const L=root.querySelectorAll?[...root.querySelectorAll(SEL)]:[];if(root.matches&&root.matches(SEL))L.push(root);
+    for(const e of L)for(const a of A){const v=e.getAttribute(a);if(v&&v.startsWith('var(')){e.style.setProperty(a,v);e.removeAttribute(a)}}};
+  const go=()=>{fix(document.body);new MutationObserver(ms=>{for(const m of ms){if(m.type==='attributes')fix(m.target);else for(const n of m.addedNodes)if(n.nodeType===1)fix(n)}})
+    .observe(document.body,{childList:true,subtree:true,attributes:true,attributeFilter:A})};
+  if(document.body)go();else addEventListener('DOMContentLoaded',go);return {fix}})();
 const NQ=D.Q.length;
 /* ordre de passage : S.idx est l'étape (0 à 26), QO[S.idx] le numéro de la question dans D.Q */
 const lcf=t=>t?t.charAt(0).toLowerCase()+t.slice(1):'';let QSIDE=false;document.addEventListener('toggle',e=>{if(e.target.classList&&e.target.classList.contains('qside'))QSIDE=e.target.open},true);
