@@ -1,0 +1,35 @@
+{
+ "name": "Cap 2032",
+ "short_name": "Cap 2032",
+ "description": "Cap 2032 : 27 questions pour situer ses idées avant la présidentielle 2027, se comparer aux programmes des candidats et explorer les conséquences de son vote d'ici 2032. Aucune donnée collectée.",
+ "lang": "fr",
+ "dir": "ltr",
+ "start_url": "./",
+ "scope": "./",
+ "display": "standalone",
+ "orientation": "portrait",
+ "background_color": "#f4ead5",
+ "theme_color": "#14213d",
+ "categories": [
+  "education",
+  "news"
+ ],
+ "icons": [
+  {
+   "src": "icons/icon-192.png",
+   "sizes": "192x192",
+   "type": "image/png"
+  },
+  {
+   "src": "icons/icon-512.png",
+   "sizes": "512x512",
+   "type": "image/png"
+  },
+  {
+   "src": "icons/maskable-512.png",
+   "sizes": "512x512",
+   "type": "image/png",
+   "purpose": "maskable"
+  }
+ ]
+}
