@@ -3,8 +3,9 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<!-- Les couleurs viennent du style choisi : pas d'assombrissement automatique par le navigateur ou une extension -->
-<meta name="color-scheme" content="only light">
+<!-- La page déclare gérer clair et sombre : Safari (assombrissement adaptatif) et les extensions de mode sombre ne la repeignent pas.
+     Les couleurs réelles viennent du style choisi. -->
+<meta name="color-scheme" content="light dark">
 <meta name="darkreader-lock">
 <title>Cap 2032</title>
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%20100%20100%22%3E%3Crect%20width%3D%22100%22%20height%3D%22100%22%20rx%3D%2222%22%20fill%3D%22%2314213d%22/%3E%3Ccircle%20cx%3D%2250%22%20cy%3D%2250%22%20r%3D%2231%22%20fill%3D%22none%22%20stroke%3D%22%23f4ead5%22%20stroke-width%3D%223%22/%3E%3Cpath%20d%3D%22M50%2014v8M50%2078v8M14%2050h8M78%2050h8%22%20stroke%3D%22%23f4ead5%22%20stroke-width%3D%223%22%20stroke-linecap%3D%22round%22/%3E%3Cpath%20d%3D%22M50%2050%20L68%2032%20L56%2056%20Z%22%20fill%3D%22%23d62839%22/%3E%3Cpath%20d%3D%22M50%2050%20L32%2068%20L44%2044%20Z%22%20fill%3D%22%23f4ead5%22/%3E%3Ccircle%20cx%3D%2250%22%20cy%3D%2250%22%20r%3D%224%22%20fill%3D%22%2314213d%22%20stroke%3D%22%23f4ead5%22%20stroke-width%3D%222%22/%3E%3C/svg%3E">
@@ -33,6 +34,7 @@
 }
 html[data-scheme="dark"]{--glass:color-mix(in srgb,var(--card) 55%,transparent);--glass-strong:color-mix(in srgb,var(--card) 80%,transparent);--glass-border:rgba(255,255,255,.14);--hi:inset 0 1px 0 rgba(255,255,255,.14), inset 0 -1px 0 rgba(0,0,0,.25);--drop:0 1px 2px rgba(0,0,0,.3), 0 14px 36px rgba(0,0,0,.45)}
 *{box-sizing:border-box}
+html{color-scheme:light dark;background:var(--bg)}
 html,body{margin:0;color:var(--ink);font-family:var(--f-body);font-size:16px;line-height:1.55;-webkit-font-smoothing:antialiased}
 body{background:var(--bg);min-height:100vh}
 body::before{content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;background:
@@ -1713,7 +1715,7 @@ function applyTheme(){
   r.setProperty('--f-title',f.title);r.setProperty('--f-body',f.body);r.setProperty('--f-balloon',f.balloon||f.body);
   r.setProperty('--radius',st.radius);r.setProperty('--bw',st.border);r.setProperty('--shadow',st.shadow);
   r.setProperty('--tt',st.titleTransform);r.setProperty('--ts',st.titleSpacing);r.setProperty('--tw',st.titleWeight);
-  r.setProperty('color-scheme',mt.scheme||'light');document.documentElement.dataset.scheme=mt.scheme||'light';
+  (document.body||document.documentElement).style.colorScheme=mt.scheme||'light';document.documentElement.dataset.scheme=mt.scheme||'light';
   const g=(mt.fonts&&mt.fonts.google)||[];
   const gl=g.length?'https://fonts.googleapis.com/css2?'+g.map(x=>'family='+encodeURIComponent(x).replace(/%20/g,'+').replace(/%3A/g,':').replace(/%40/g,'@').replace(/%3B/g,';')).join('&')+'&display=swap':'';
   if(gl&&!window.CAP_NATIVE&&window.CAP_PLATFORM!=='web')$('#gf').href=gl;else $('#gf').removeAttribute('href');
@@ -2896,6 +2898,38 @@ if(window.CAP_PLATFORM==='web')try{$('#app-ver').insertAdjacentHTML('afterend','
   const after=()=>{Music.sync();setTimeout(()=>DataUp.check(false),2500);Notif.badge();if(PENDING_LINK){const l=PENDING_LINK;PENDING_LINK=null;Notif.openLink(l)}else setTimeout(Notif.maybeToast,1400)};
   if(!Intro.seen()&&!PENDING_LINK)Intro.play(after);else after();
 })();
+</script>
+<div id="beta" role="dialog" aria-modal="true" aria-labelledby="beta-t" hidden>
+ <div class="beta-card">
+  <p class="beta-tag">Version de test</p>
+  <h2 id="beta-t">Cap 2032 est encore en développement</h2>
+  <p>Vous utilisez une version de test : des textes, des illustrations et des fonctions peuvent encore changer ou contenir des erreurs.</p>
+  <p>Vos remarques nous aident à l’améliorer. Écrivez-nous à <a id="beta-mail" href="#">contact.ym<span>@</span>pm.me</a>.</p>
+  <p class="beta-small">Vos réponses au questionnaire, elles, restent sur votre appareil : rien n’est envoyé.</p>
+  <button type="button" id="beta-ok">J’ai compris</button>
+ </div>
+</div>
+<style>
+#beta{position:fixed;inset:0;z-index:2147483000;display:flex;align-items:center;justify-content:center;padding:20px;background:rgba(10,12,24,.55);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px)}
+#beta[hidden]{display:none}
+#beta .beta-card{max-width:420px;width:100%;background:#fffdf6;color:#14213d;border-radius:22px;padding:22px 22px 18px;box-shadow:0 20px 60px rgba(0,0,0,.35);font:16px/1.5 system-ui,-apple-system,sans-serif;color-scheme:light}
+#beta h2{margin:.1em 0 .5em;font:800 1.25rem/1.25 system-ui,-apple-system,sans-serif;text-transform:none;letter-spacing:0;color:#14213d}
+#beta p{margin:.5em 0}
+#beta .beta-tag{display:inline-block;margin:0;padding:3px 10px;border-radius:999px;background:#c8102e;color:#fff;font-size:.75rem;font-weight:800;letter-spacing:.06em;text-transform:uppercase}
+#beta .beta-small{font-size:.85rem;color:#14213dbb}
+#beta a{color:#c8102e;font-weight:700}
+#beta button{margin-top:12px;width:100%;min-height:48px;border:0;border-radius:14px;background:#14213d;color:#fff;font:inherit;font-weight:800;cursor:pointer}
+</style>
+<script>
+(()=>{const K='cap2032.beta-vu',el=document.getElementById('beta');let seen=false;
+  try{seen=sessionStorage.getItem(K)==='1'}catch(e){}
+  if(seen||!el)return;
+  const m=document.getElementById('beta-mail'),u='contact.ym',d='pm.me';m.href='mailto:'+u+'@'+d+'?subject='+encodeURIComponent('Cap 2032 · retour sur la version de test');
+  const close=()=>{el.hidden=true;try{sessionStorage.setItem(K,'1')}catch(e){}};
+  document.getElementById('beta-ok').addEventListener('click',close);
+  el.addEventListener('click',e=>{if(e.target===el)close()});
+  addEventListener('keydown',e=>{if(e.key==='Escape'&&!el.hidden)close()});
+  el.hidden=false;setTimeout(()=>{try{document.getElementById('beta-ok').focus()}catch(e){}},50)})();
 </script>
 <script>
 if('serviceWorker' in navigator&&location.protocol==='https:')addEventListener('load',()=>navigator.serviceWorker.register('sw.js').catch(()=>{}));
