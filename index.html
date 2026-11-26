@@ -364,6 +364,11 @@ details.sub[open]>summary{margin-bottom:8px}
 .bar .pct{font-variant-numeric:tabular-nums;font-weight:700;text-align:right}
 /* Carte des familles */
 .compass svg{width:100%;height:auto;display:block}
+.cmp-sel{display:flex;align-items:center;gap:8px}.cmp-sel select{flex:1;min-width:0;min-height:44px;border-radius:12px;border:1.5px solid var(--line);background:var(--card);color:var(--ink);font:inherit;font-weight:700;padding:0 10px}
+.cmp-sum{font-weight:700}.cmp-row{border-top:1px solid var(--line);padding:10px 0 2px;display:grid;gap:6px}.cmp-row .q{font-size:.92rem;font-weight:700}
+.cmp-g{display:grid;grid-template-columns:1fr 1fr;gap:6px}.cmp-c{border-radius:10px;padding:6px 8px;font-size:.8rem;line-height:1.3;background:color-mix(in srgb,var(--pc,#999) 18%,var(--card));border:1.5px solid color-mix(in srgb,var(--pc,#999) 60%,transparent)}
+.cmp-c.none{background:transparent;border:1.5px dashed var(--line);color:var(--muted);font-style:italic}.cmp-c b{display:block;font-size:.72rem;text-transform:uppercase;letter-spacing:.04em;opacity:.8}.cmp-c a{font-size:.75rem}
+.cmp-me{font-size:.78rem;color:var(--muted)}.cmp-tag{display:inline-block;font-size:.7rem;font-weight:800;padding:1px 8px;border-radius:999px;background:var(--line);margin-left:6px;vertical-align:1px}
 #ptr{position:fixed;left:50%;top:var(--ptr-top,64px);z-index:9;display:flex;align-items:center;gap:8px;padding:7px 14px 7px 10px;border-radius:999px;
   background:color-mix(in srgb,var(--card) 82%,transparent);-webkit-backdrop-filter:blur(14px) saturate(180%);backdrop-filter:blur(14px) saturate(180%);
   border:1px solid color-mix(in srgb,var(--ink) 12%,transparent);box-shadow:0 6px 18px rgba(0,0,0,.14);font-size:.85rem;font-weight:700;color:var(--ink);
@@ -933,6 +938,10 @@ details.sub[open]>summary{margin-bottom:8px}
       <p class="small"><b>Seuls les candidats dont le programme est publié, en tout ou en partie, figurent sur cette carte et dans cette liste.</b></p>
       <p class="small muted">Touche un nom pour ouvrir la fiche du candidat. Le point et le nom ont la couleur de la famille de sa nuance la plus proche ; un trait relie le nom à son point quand il en est éloigné. Point placé au centre des trois nuances les plus proches. C'est une estimation : elle repose seulement sur les questions renseignées, et moins il y en a, moins elle est fiable.</p>
     </div>
+    <div class="card cmp" id="cmp-card" style="display:grid;gap:10px"><span class="kicker">Face à face</span><h2>Comparer deux candidats</h2>
+      <p class="small muted">Leurs positions sourcées, question par question, à côté de ta réponse. Une case vide veut dire « non renseigné » : Cap 2032 ne devine pas.</p>
+      <div class="cmp-sel"><select id="cmp-a" aria-label="Premier candidat"></select><span aria-hidden="true">et</span><select id="cmp-b" aria-label="Second candidat"></select></div>
+      <div id="cmp-out"></div></div>
     <div id="cands-list" style="display:grid;gap:14px"></div>
     <details class="card fam" style="--fc:var(--muted)"><summary><i class="fdot"></i><span><b class="fname">Toutes les candidatures</b><span class="small muted">Déclarées puis pressenties, d'après 2027 et moi</span></span><span class="chev" aria-hidden="true"></span></summary><div class="fbody"><p class="small muted">Les candidats sans programme publié n'ont pas de positions dans Cap 2032.</p><div id="cands-all" class="small"></div></div></details>
     <p class="small muted" id="cands-credit"></p>
@@ -993,6 +1002,8 @@ details.sub[open]>summary{margin-bottom:8px}
       <p class="small muted"><b>Comprendre pourquoi je pense ça (facultatif).</b> Après le questionnaire, ton résultat est d'abord figé. Puis, sur tes thèmes, tu peux dire d'où vient ton idée, ce qui pourrait te faire changer d'avis, ta certitude, te mettre à la place de quelqu'un qui subit le prix de ta réponse, et regarder les tensions entre tes réponses. Cap 2032 te montre ensuite ce qui a bougé (Wilson et Schooler, 1991 ; Nisbett et Wilson, 1977). Ces réponses restent sur ton téléphone.</p>
       <p class="small muted"><b>Solidité du résultat.</b> Un indicateur à trois niveaux tient compte du nombre de réponses, de l'écart entre tes deux nuances les plus proches, de ta certitude moyenne et des tensions non résolues. Il ne change pas le score.</p>
       <p class="small muted"><b>Les candidats et leurs programmes.</b> Sur chaque fiche, les mesures relevées par 2027 et moi sont rangées dans les neuf thèmes ; Cap 2032 affiche leur nombre par thème, la proximité avec toi thème par thème, le prix assumé par chaque position et les tensions entre ses positions, calculées avec les mêmes règles que pour toi.</p>
+      <p class="small muted"><b>Recoupement de la liste des candidatures.</b> La liste et les statuts viennent de 2027 et moi. Ils sont recoupés avec le recensement de Candidator (candidator.fr), sans en reprendre les données. Au 26 novembre 2026, les 13 candidats comparés dans Cap 2032 ont le même statut sur les deux sites ; les écarts portent sur des candidatures sans programme publié, qui ne figurent pas dans les comparaisons.</p>
+      <p class="small muted"><b>Face à face.</b> Dans l'onglet Candidats, deux candidats peuvent être comparés question par question, avec la source de chaque position et ta propre réponse. Seules les positions sourcées sont affichées.</p>
       <p class="small muted"><b>Ton profil ne compte pas dans le calcul.</b> Le pseudo et la tranche d'âge servent seulement à nommer tes parcours et à choisir le style graphique. La question sur la structure familiale (grille d'Emmanuel Todd) a été retirée : un profil ne doit pas peser sur un résultat qui doit refléter tes seules réponses.</p>
       <p class="small muted">Les projections vers 2032 sont des fictions prospectives, appuyées sur les mécanismes décrits dans la littérature ci-dessous. Elles ne prédisent rien. Bibliographie indicative, à faire valider par un comité scientifique.</p>
     </div>
@@ -1294,6 +1305,7 @@ TOOLS:[
  {n:"2027 et moi",t:"Données ouvertes",s:"Actif pour 2027",d:"Base ouverte (Licence Ouverte 2.0, publiée sur data.gouv.fr et GitHub) : candidatures, programmes, positions sourcées sur 35 questions, votes des parlementaires, sondages. Cap 2032 réutilise ses positions pour situer les candidats.",u:"https://2027etmoi.fr"},
  {n:"Isoloir Commun",t:"Site",s:"Actif pour 2027",d:"Votes de l'Assemblée nationale, liste des candidats 2027 avec liens vers leurs sites officiels, programmes et questionnaire de comparaison. Se présente comme gratuit, neutre et sourcé. Éditeur et licence de réutilisation non précisés dans les pages consultées.",u:"https://isoloircommun.fr/"},
  {n:"Votons 2027",t:"Site",s:"Actif pour 2027",d:"Comparaison de candidats deux à deux sur leurs programmes, partis et intentions de vote, et test d'affinité. Se présente comme neutre et sourcé, sans consigne de vote.",u:"https://votons-2027.fr/"},
+ {n:"Candidator",t:"Site",s:"Actif pour 2027",d:"Test de 16 affirmations sur 8 axes : les positions des candidats y sont notées de 1 à 5 par l'auteur du site, d'après leurs programmes et déclarations, sans source détaillée par position. Recense aussi les candidatures déclarées, pressenties et retirées : Cap 2032 s'en sert pour recouper sa liste, sans reprendre ses données (tous droits réservés). Conserve les réponses de façon anonyme et mesure l'audience avec Google Analytics.",u:"https://www.candidator.fr/"},
  {n:"ÉlyséeScope",t:"Site",s:"Actif pour 2027",d:"Plateforme citoyenne qui se dit indépendante : candidats, programmes, sondages et comparateur jusqu'à trois candidats sur huit thèmes. Son fichier de présentation pour les IA (llms-full.txt), daté d'avril 2026, ne contient pas de positions par candidat : Cap 2032 ne s'en sert que pour recouper.",u:"https://www.elyseescope.com/"},
  {n:"Comparateur de la Fondation iFRAP",t:"Comparatif thématique",s:"Actif pour 2027",d:"Mesures des candidats classées par thème (finances publiques, dette…). Publié par un think tank d'orientation libérale : à lire comme une source engagée.",u:"https://www.ifrap.org/comparateurs/presidentielles-2027"},
  {n:"presid",t:"Application mobile",s:"Actif pour 2027",d:"Application lancée par deux étudiants : on tranche des mesures tirées des programmes, puis l'application révèle qui les défend, avec la source datée. Aucune donnée collectée.",u:"https://www.planetegrandesecoles.com/?p=130466"},
@@ -2247,6 +2259,28 @@ const credit=()=>{const dt=t=>new Date(t).toLocaleString('fr-FR',{day:'2-digit',
    g=D.CANDS.generated?new Date(D.CANDS.generated).toLocaleDateString('fr-FR'):'',ok=typeof DataUp!=='undefined'?DataUp.lastOk():0;
    const auto=typeof DataUp!=='undefined'&&!DataUp.on()?'Mise à jour automatique désactivée : liste intégrée à l’application.':ok?`Dernière mise à jour automatique : ${dt(ok)}. Tire la page vers le bas pour vérifier maintenant.`:'Mise à jour automatique pas encore effectuée sur cet appareil : liste intégrée à l’application. Tire la page vers le bas pour vérifier maintenant.';
    return `${auto} Liste Cap 2032 version ${D.CANDS.version}${g?' du '+g:''}. Source : 2027 et moi (https://2027etmoi.fr), données du ${fdate(D.CANDS.maj_donnees)}. Licence Ouverte 2.0. Positions converties vers les questions de Cap 2032 et complétées par un codage des mesures des programmes : voir la mention sous chaque réponse.`};
+/* ---------- Face à face : deux candidats sur les 27 questions ---------- */
+let CMP=null;
+function renderCmp(){const C=CS(),card=$('#cmp-card');if(!card)return;if(C.length<2){card.hidden=true;return}card.hidden=false;
+  if(!CMP||!C.find(c=>c.id===CMP[0])||!C.find(c=>c.id===CMP[1])){
+    /* par défaut : les deux candidats les plus proches de tes réponses, sinon les deux premiers */
+    let o=C.map(c=>({c,s:candAgree(c)})).filter(x=>x.s!==null).sort((a,b)=>b.s-a.s);CMP=(o.length>1?o:C.map(c=>({c}))).slice(0,2).map(x=>x.c.id)}
+  const opt=sel=>C.map(c=>`<option value="${esc(c.id)}"${c.id===sel?' selected':''}>${esc(c.nom)}</option>`).join('');
+  $('#cmp-a').innerHTML=opt(CMP[0]);$('#cmp-b').innerHTML=opt(CMP[1]);
+  const A=C.find(c=>c.id===CMP[0]),B=C.find(c=>c.id===CMP[1]);
+  const lab=v=>LABELS.find(l=>l[1]===v)||LABELS[2];
+  const cell=(c,p)=>{if(!p)return `<div class="cmp-c none"><b>${esc(short(c.nom))}</b>Non renseigné</div>`;const l=lab(p.v);
+    return `<div class="cmp-c" style="--pc:${l[2]}"><b>${esc(short(c.nom))}</b>${esc(l[0])}${p.s&&p.s.url?`<br><a href="${esc(p.s.url)}" target="_blank" rel="noopener">Source${p.s.date?' · '+esc(p.s.date.split('-').reverse().join('/')):''}</a>`:''}</div>`};
+  let both=0,same=0,opp=0;const rows=[];
+  D.Q.forEach((q,i)=>{const a=A.pos[i+1],b=B.pos[i+1];if(!a&&!b)return;
+    let tag='';if(a&&b){both++;const d=Math.abs(a.v-b.v);if(d<=1){same++;tag='<span class="cmp-tag">Proches</span>'}else if(d>=3){opp++;tag='<span class="cmp-tag">Opposés</span>'}}
+    const u=S.answers[i],me=typeof u==='number'?`Toi : ${esc(lab(u)[0])}`:'';
+    rows.push([a&&b?0:1,`<div class="cmp-row"><div class="q">${esc(QT(q))}${tag}</div><div class="cmp-g">${cell(A,a)}${cell(B,b)}</div>${me?`<div class="cmp-me">${me}</div>`:''}</div>`])});
+  rows.sort((x,y)=>x[0]-y[0]);
+  const sum=A.id===B.id?'Choisis deux candidats différents.':both?`Positions connues pour les deux sur ${both} question${both>1?'s':''} : proches sur ${same}, opposées sur ${opp}.`:'Aucune question où les deux ont une position connue : comparez-les plutôt sur leurs programmes.';
+  $('#cmp-out').innerHTML=`<p class="small cmp-sum">${sum}</p>${A.id===B.id?'':rows.map(r=>r[1]).join('')}`;try{Voice.apply()}catch(e){}}
+function candAgree(c){let a=0,k=0;D.Q.forEach((q,i)=>{const p=c.pos[i+1],u=S.answers[i];if(!p||typeof u!=='number')return;a+=4-Math.abs(u-p.v);k+=4});return k?a/k:null}
+document.addEventListener('change',e=>{if(e.target.id==='cmp-a'||e.target.id==='cmp-b'){CMP=[$('#cmp-a').value,$('#cmp-b').value];haptic('select');renderCmp()}});
 function renderCands(){
   const C=CS();
   $('#cands-intro').textContent=`${C.length} candidats dont le programme est publié, en tout ou en partie, selon 2027 et moi. Leurs positions viennent de leurs déclarations et programmes sourcés. Une question sans source reste « non renseignée » : Cap 2032 ne devine pas. Les candidats sont classés par ordre alphabétique du nom.`;
@@ -2302,6 +2336,7 @@ function renderCands(){
   const E27='https://2027etmoi.fr',grp=k=>[...D.CANDS.all].filter(a=>a.statut===k).sort((a,b)=>sortKey(a.nom).localeCompare(sortKey(b.nom),'fr'));
   const li=a=>`<div><a href="${E27}/candidats/${encodeURIComponent(a.id)}" target="_blank" rel="noopener"><b>${esc(a.nom)}</b></a> <span class="muted">· ${esc(a.parti||'sans étiquette')}</span></div>`;
   $('#cands-all').innerHTML=[['declare','Candidatures déclarées'],['pressenti','Candidatures pressenties']].map(([k,t])=>{const g=grp(k);return g.length?`<h4 class="cgrp">${t} (${g.length})</h4><div class="nolist">${g.map(li).join('')}</div>`:''}).join('')+`<p class="small"><a class="btn ghost sm" href="${E27}/candidats" target="_blank" rel="noopener">Toutes les fiches sur 2027 et moi ↗</a></p>`;
+  try{renderCmp()}catch(e){}
   $('#cands-credit').innerHTML=esc(credit()).replace('https://2027etmoi.fr','<a href="https://2027etmoi.fr" target="_blank" rel="noopener">https://2027etmoi.fr</a>');
 }
 function corr(a,b){const ma=a.reduce((s,x)=>s+x,0)/a.length,mb=b.reduce((s,x)=>s+x,0)/b.length;let n=0,da=0,db=0;a.forEach((x,i)=>{n+=(x-ma)*(b[i]-mb);da+=(x-ma)**2;db+=(b[i]-mb)**2});return da&&db?n/Math.sqrt(da*db):0}
