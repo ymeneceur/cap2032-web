@@ -1,5 +1,5 @@
 // Cap 2032 · service worker (généré par build-web.js)
-const CACHE='cap2032-1.0-13-mwwjbtt8';
+const CACHE='cap2032-1.0-13-mwy1g42k';
 const SHELL=['./','index.html','manifest.webmanifest','icons/icon-192.png'];
 self.addEventListener('install',e=>{e.waitUntil(caches.open(CACHE).then(c=>c.addAll(SHELL)).then(()=>self.skipWaiting()))});
 self.addEventListener('activate',e=>{e.waitUntil(caches.keys().then(k=>Promise.all(k.filter(n=>n!==CACHE).map(n=>caches.delete(n)))).then(()=>self.clients.claim()))});
